@@ -1,0 +1,18 @@
+# datasets / private artifacts
+/data/
+/dataset_clean/
+/dataset_20260321/
+/output/*.pdf
+/output/*.docx
+/output/*.zip
+/output/*_clean*.xlsx
+/output/*phase2*.xlsx
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

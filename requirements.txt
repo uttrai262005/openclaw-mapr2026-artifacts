@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+scipy
+openpyxl
+python-docx
+pypdf
+PyPDF2
+pymupdf
+pillow
+pytesseract
