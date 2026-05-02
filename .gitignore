@@ -1,5 +1,9 @@
 # datasets / private artifacts
-/data/
+# NOTE: keep /data/ tracked as an empty placeholder folder (README only) for clarity.
+!/data/
+/data/*
+!/data/README.md
+
 /dataset_clean/
 /dataset_20260321/
 /output/*.pdf
