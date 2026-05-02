@@ -12,6 +12,13 @@ This repo **does not include** raw student submissions (DOCX/PDF/TXT/images) due
 We recommend releasing only **derived anonymized artifacts** (scores/metadata/audit logs) and keeping raw submissions private.
 
 ## Quickstart
+### 0) Quick demo (no private data, no Gateway required)
+Build a tiny inventory from the included synthetic demo dataset:
+
+```bash
+python normalize_dataset.py --src-root demo_data/dataset_expanded --out-root demo_data/dataset_clean --xlsx-out output/dataset_inventory.xlsx
+```
+
 ### 1) Environment
 - Python 3.10+ recommended (tested with Python 3.12)
 

@@ -4,7 +4,7 @@ title: "OpenClaw Rubric-Based Grading Artifacts"
 type: software
 version: "1.0.0"
 date-released: "2026-05-02"
-repository-code: "<REPO_URL>"
+repository-code: "https://github.com/uttrai262005/openclaw-soict-artifacts"
 authors:
   - family-names: "Nguyen"
     given-names: "Dinh Truc"
