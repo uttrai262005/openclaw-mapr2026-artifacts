@@ -137,6 +137,8 @@ def get_gateway_config() -> Tuple[str, str, str]:
 
 
 def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission_text: str) -> Dict[str, Any]:
+    # NOTE (English): The prompt content is written in Vietnamese because the assignment submissions are in Vietnamese.
+    # The important reproducibility contract is: (i) rubric-injection, (ii) JSON-only output, (iii) single call per submission.
     system = (
         "Bạn là giám khảo chấm bài BT1. Chỉ dùng đúng rubric được cung cấp. "
         "Chấm đủ 5 tiêu chí trong MỘT lần. "
@@ -204,6 +206,9 @@ def ensure_workbook(path: Path):
     wb = Workbook()
     ws = wb.active
     ws.title = "BT1"
+
+    # NOTE (English): Column headers are kept in Vietnamese to match the course context.
+    # If you release spreadsheets publicly, anonymize student identifiers and consider translating headers.
     ws.append(
         [
             "MSSV",

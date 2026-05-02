@@ -143,6 +143,8 @@ def get_gateway_config() -> Tuple[str, str, str]:
 
 
 def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission_text: str) -> Dict[str, Any]:
+    # NOTE (English): The prompt is in Vietnamese because CV submissions/rubrics are Vietnamese.
+    # Reproducibility relies on rubric-injection + JSON-only response + single call per MSSV group.
     system = (
         "Bạn là giám khảo chấm bài BT3 (CV). Chỉ dùng đúng rubric được cung cấp. "
         "Chấm đủ 5 tiêu chí trong MỘT lần. "

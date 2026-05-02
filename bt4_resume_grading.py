@@ -136,6 +136,8 @@ def get_gateway_config() -> Tuple[str, str, str]:
 
 
 def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission_text: str) -> Dict[str, Any]:
+    # NOTE (English): Prompt is Vietnamese because submissions/rubrics are Vietnamese.
+    # Reproducibility relies on rubric-injection + JSON-only response + deterministic rounding.
     system = (
         "Bạn là giám khảo chấm bài BT4. Chỉ dùng đúng rubric được cung cấp. "
         "Chấm đủ 4 tiêu chí trong MỘT lần. "
