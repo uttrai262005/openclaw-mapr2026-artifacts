@@ -104,13 +104,13 @@ def write_bt4_excel(out_path: Path, graded: List[dict], *, files: List[Path]) ->
     ws.title = "BT4"
 
     header = [
-        "MSSV",
-        "Tiêu chí 1 (/3)",
-        "Tiêu chí 2 (/4)",
-        "Tiêu chí 3 (/2.5)",
-        "Tiêu chí 4 (/0.5)",
-        "Tổng (/10)",
-        "Nhận xét ngắn",
+        "Student ID",
+        "Criterion 1 (/3)",
+        "Criterion 2 (/4)",
+        "Criterion 3 (/2.5)",
+        "Criterion 4 (/0.5)",
+        "Total (/10)",
+        "Short feedback",
     ]
     ws.append(header)
     for c in ws[1]:

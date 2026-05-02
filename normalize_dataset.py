@@ -200,7 +200,16 @@ def main(argv: list[str] | None = None) -> int:
     wb = Workbook()
     ws = wb.active
     ws.title = "ThongKe"
-    header = ["MSSV", "Lớp", "BT", "Định dạng file", "Đường dẫn", "Nguồn", "Đọc được", "Ghi chú"]
+    header = [
+        "Student ID",
+        "Cohort/Class",
+        "Assignment",
+        "File type",
+        "Output path",
+        "Source path",
+        "Readable",
+        "Notes",
+    ]
     ws.append(header)
     for c in ws[1]:
         c.font = Font(bold=True)
