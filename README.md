@@ -28,11 +28,26 @@ Create environment and install dependencies:
 pip install -r requirements.txt
 ```
 
-(Optional) pin exact versions used by the authors:
+For *exact* reproducibility (recommended), install the pinned lockfile used by the authors:
 
 ```bash
 pip install -r requirements.lock.txt
 ```
+
+### System dependency (OCR)
+Some utilities support OCR via `pytesseract`, which requires the **Tesseract OCR** binary to be installed on your system.
+
+- Ubuntu/Debian:
+  ```bash
+  sudo apt-get update && sudo apt-get install -y tesseract-ocr
+  ```
+- macOS (Homebrew):
+  ```bash
+  brew install tesseract
+  ```
+- Windows:
+  Install Tesseract and ensure `tesseract.exe` is available on `PATH`.
+
 
 ### 2) Reproduce the paper artifacts (no private data required)
 Run the full reproduction pipeline:

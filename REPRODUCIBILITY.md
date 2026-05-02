@@ -6,6 +6,15 @@ This repository contains the scripts and artifacts to reproduce the tables and f
 - Python 3.10+ (tested on 3.12)
 - OpenClaw Gateway running locally
 
+For exact dependency versions, prefer:
+```bash
+pip install -r requirements.lock.txt
+```
+
+### System dependency (OCR)
+If you run OCR-enabled utilities (`pytesseract`), you must install the system Tesseract binary.
+See README for platform-specific install notes.
+
 Environment variables (required for grading runs):
 - OPENCLAW_GATEWAY_URL
 - OPENCLAW_GATEWAY_TOKEN
