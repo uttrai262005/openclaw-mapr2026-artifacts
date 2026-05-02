@@ -1,0 +1,10 @@
+{
+  "source_root": "repo_release_v2\\demo_data\\dataset_expanded",
+  "output_root": "repo_release_v2\\demo_data\\dataset_clean",
+  "excel": "repo_release_v2\\output\\dataset_inventory.xlsx",
+  "copied": 2,
+  "missing_main": 0,
+  "readable": 2,
+  "not_readable": 0,
+  "total_rows": 2
+}

@@ -1,0 +1,18 @@
+Student ID: 000001
+Assignment: BT4 (Career plan reflection) — SYNTHETIC SAMPLE
+
+Career goal:
+I aim to become a junior e-commerce data analyst within 12 months.
+
+Preparation:
+- Completed an introductory SQL course and practice daily.
+- Built two small dashboards with public e-commerce datasets.
+- Improved presentation skills by joining a student club.
+
+2/5/10-year roadmap:
+- 2 years: junior analyst → analyst, strengthen statistics and experimentation.
+- 5 years: lead analyst, mentor juniors, contribute to data strategy.
+- 10 years: product analytics manager, focus on ethical data use and impact.
+
+Writing/argumentation:
+This plan is realistic because it matches my current skills and includes measurable milestones.

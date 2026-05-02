@@ -11,12 +11,14 @@ from openpyxl.styles import Font
 
 
 WS = Path(__file__).resolve().parent
-SRC_ROOT = WS / "dataset_20260321" / "expanded2"
-OUT_ROOT = WS / "dataset_clean"
-XLSX_OUT = WS / "output" / "thong_ke_dataset.xlsx"
 
-ALLOWED = {".docx", ".pdf", ".doc"}
-PRIORITY = {".docx": 3, ".pdf": 2, ".doc": 1}
+# Defaults are set to demo_data so the script can run in a public release without private datasets.
+DEFAULT_SRC_ROOT = WS / "demo_data" / "dataset_expanded"
+DEFAULT_OUT_ROOT = WS / "demo_data" / "dataset_clean"
+DEFAULT_XLSX_OUT = WS / "output" / "dataset_inventory.xlsx"
+
+ALLOWED = {".docx", ".pdf", ".doc", ".txt"}
+PRIORITY = {".docx": 4, ".pdf": 3, ".doc": 2, ".txt": 1}
 
 
 @dataclass
@@ -86,6 +88,9 @@ def is_readable(file_path: Path) -> tuple[bool, str]:
                 return False, f"PDF read failed: {e}"
         if ext == ".doc":
             return False, "Legacy .doc not supported for text extraction in current pipeline"
+        if ext == ".txt":
+            _ = file_path.read_text(encoding="utf-8", errors="replace")
+            return True, ""
     except Exception as e:
         return False, str(e)
 
@@ -109,18 +114,30 @@ def safe_copy(src: Path, dest: Path) -> Path:
     return dest
 
 
-def main() -> int:
-    if not SRC_ROOT.exists():
-        raise FileNotFoundError(f"Source root not found: {SRC_ROOT}")
+def main(argv: list[str] | None = None) -> int:
+    import argparse
 
-    OUT_ROOT.mkdir(parents=True, exist_ok=True)
+    ap = argparse.ArgumentParser(description="Normalize an expanded dataset folder into a flat dataset_clean/ layout.")
+    ap.add_argument("--src-root", default=str(DEFAULT_SRC_ROOT), help="Expanded dataset root (default: demo_data)")
+    ap.add_argument("--out-root", default=str(DEFAULT_OUT_ROOT), help="Output clean dataset root (default: demo_data)")
+    ap.add_argument("--xlsx-out", default=str(DEFAULT_XLSX_OUT), help="Inventory XLSX output path")
+    args = ap.parse_args(argv)
+
+    src_root = Path(args.src_root)
+    out_root = Path(args.out_root)
+    xlsx_out = Path(args.xlsx_out)
+
+    if not src_root.exists():
+        raise FileNotFoundError(f"Source root not found: {src_root}")
+
+    out_root.mkdir(parents=True, exist_ok=True)
     (WS / "output").mkdir(parents=True, exist_ok=True)
 
     rows: list[Row] = []
     missing_main = 0
     copied = 0
 
-    for bt_folder in sorted([p for p in SRC_ROOT.iterdir() if p.is_dir()]):
+    for bt_folder in sorted([p for p in src_root.iterdir() if p.is_dir()]):
         # folder name like P11_BT3_299956
         m = re.match(r"^(P\d+)_BT(\d)_", bt_folder.name)
         if not m:
@@ -148,7 +165,7 @@ def main() -> int:
                 continue
 
             ext = main_file.suffix.lower()
-            out_path = OUT_ROOT / bt / f"{mssv}{ext}"
+            out_path = out_root / bt / f"{mssv}{ext}"
             try:
                 final = safe_copy(main_file, out_path)
                 copied += 1
@@ -204,31 +221,31 @@ def main() -> int:
     for col in range(1, 9):
         ws.column_dimensions[chr(64 + col)].width = 22 if col < 5 else 60
 
-    XLSX_OUT.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(str(XLSX_OUT))
+    xlsx_out.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(str(xlsx_out))
 
     readable_n = sum(1 for r in rows if r.out_path and r.readable)
     unreadable_n = sum(1 for r in rows if r.out_path and (not r.readable))
 
-    print(f"Source root: {SRC_ROOT}")
+    print(f"Source root: {src_root}")
     print(f"Copied main files: {copied}")
     print(f"Missing main file: {missing_main}")
     print(f"Readable: {readable_n}")
     print(f"Not readable: {unreadable_n}")
-    print(f"Wrote Excel: {XLSX_OUT}")
+    print(f"Wrote Excel: {xlsx_out}")
 
     # also write a small summary json
     summary = {
-        "source_root": str(SRC_ROOT),
-        "output_root": str(OUT_ROOT),
-        "excel": str(XLSX_OUT),
+        "source_root": str(src_root),
+        "output_root": str(out_root),
+        "excel": str(xlsx_out),
         "copied": copied,
         "missing_main": missing_main,
         "readable": readable_n,
         "not_readable": unreadable_n,
         "total_rows": len(rows),
     }
-    (WS / "output" / "thong_ke_dataset_summary.json").write_text(
+    (WS / "output" / "dataset_inventory_summary.json").write_text(
         __import__("json").dumps(summary, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
