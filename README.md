@@ -2,7 +2,7 @@
 
 This repository contains the **code artifacts** used in our SOICT paper on rubric-grounded automated grading with OpenClaw, including:
 - Phase 1 single-agent grading scripts
-- Phase 2 multi-agent grading system (`skills/giang-vien-v2`)
+- Phase 2 multi-agent grading system (`skills/multi-agent-grader`)
 - Analysis scripts used to compute reliability metrics (QWK/MAE/Pearson) and Phase-2 vs Phase-1 shifts
 - Paper drafts (`paper/`)
 
@@ -57,7 +57,7 @@ Optionally:
 - `OPENCLAW_MODEL` (default used by Phase 1 scripts is `openai-codex/gpt-5.2`)
 
 ## Repository structure
-- `skills/giang-vien-v2/`: Phase 2 multi-agent grading system
+- `skills/multi-agent-grader/`: Phase 2 multi-agent grading system
 - `bt*_grade_incremental.py`: Phase 1 grading scripts
 - `scripts/`: metric computation and paper utilities
 - `paper/`: Word/Markdown drafts
