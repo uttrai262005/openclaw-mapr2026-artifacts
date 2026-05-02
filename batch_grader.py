@@ -1,11 +1,12 @@
-"""cham_bai_hang_loat.py
+"""batch_grader.py
 
 Batch grading driver for dataset_clean.
 
-IMPORTANT: This script currently implements the BT4 rubric only. For Phase-1 grading of BT1–BT3,
-use the corresponding bt1_grade_incremental.py / bt2_grade_incremental.py / bt3_grade_incremental.py scripts.
+IMPORTANT:
+- This script currently implements the BT4 rubric only.
+- For Phase-1 grading of BT1–BT3, use bt1_grade_incremental.py / bt2_grade_incremental.py / bt3_grade_incremental.py.
 
-Current task: support rounding policy:
+Rounding policy implemented:
 - Each criterion score rounded to nearest 0.25: round(x*4)/4
 - Final total rounded to nearest 0.5: round(x*2)/2
 
