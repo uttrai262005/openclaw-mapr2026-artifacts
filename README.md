@@ -80,7 +80,8 @@ Optionally:
 
 ## Repository structure
 - `skills/multi-agent-grader/`: Phase 2 multi-agent grading system
-- `bt*_grade_incremental.py`: Phase 1 grading scripts
+- `bt*_grade_incremental.py`: Phase 1 grading scripts (LLM calls via OpenClaw Gateway)
+- `bt4_grade_incremental.py`: Phase 1 BT4 incremental grading/updating helper
 - `scripts/`: metric computation and paper utilities
 - `paper/`: Word/Markdown drafts
 - `data/`: placeholder for private datasets (NOT committed)

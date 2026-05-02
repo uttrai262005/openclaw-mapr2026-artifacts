@@ -10,3 +10,16 @@ authors:
     given-names: "Dinh Truc"
   - family-names: "Nguyen"
     given-names: "Uyen Nhi"
+
+preferred-citation:
+  type: conference-paper
+  title: "An Auditable Agentic LLM Pipeline for Rubric-Based Grading: Evidence from a Real E-commerce Course Dataset"
+  authors:
+    - family-names: "Nguyen"
+      given-names: "Dinh Truc"
+    - family-names: "Nguyen"
+      given-names: "Uyen Nhi"
+  conference:
+    name: "SOICT"
+    year: 2026
+  url: "https://github.com/uttrai262005/openclaw-soict-artifacts"
