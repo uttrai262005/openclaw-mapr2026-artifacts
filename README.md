@@ -74,5 +74,20 @@ Optionally:
 - Phase 1 and Phase 2 are designed to be comparable by using the **same underlying model** (gpt-5.2 via OpenClaw/Codex OAuth) while changing only the orchestration.
 - LLM outputs are constrained to **JSON-only** responses for robust parsing.
 
+## How to cite
+- See `CITATION.cff` (GitHub will also show a *Cite this repository* panel).
+- If you use the code/artifacts in academic work, please cite the associated SOICT paper as described there.
+
+## Recommended GitHub topics
+To improve discoverability, we recommend adding these Topics on GitHub:
+- reproducibility
+- educational-ai
+- automated-grading
+- rubric-based-assessment
+- llm
+- multi-agent
+- agentic-ai
+- evaluation
+
 ## License
 See `LICENSE`.
