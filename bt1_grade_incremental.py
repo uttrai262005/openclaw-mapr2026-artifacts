@@ -64,17 +64,8 @@ def read_pdf_text(path: Path) -> str:
                 texts.append(t)
         return "\n\n".join(texts).strip()
     except Exception:
-        pass
-
-    from PyPDF2 import PdfReader  # type: ignore
-
-    reader = PdfReader(str(path))
-    texts = []
-    for page in reader.pages:
-        t = (page.extract_text() or "").strip()
-        if t:
-            texts.append(t)
-    return "\n\n".join(texts).strip()
+        # pypdf failed; return empty to signal unreadable PDF in this pipeline.
+        return ""
 
 
 def read_text_file(path: Path) -> str:

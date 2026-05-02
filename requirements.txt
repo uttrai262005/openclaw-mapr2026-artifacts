@@ -5,7 +5,6 @@ scipy
 openpyxl
 python-docx
 pypdf
-PyPDF2
 pymupdf
 pillow
 pytesseract

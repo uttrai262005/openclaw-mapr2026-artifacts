@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 import urllib.request
-from openpyxl import load_workbook
+from openpyxl import Workbook, load_workbook
 
 WS = Path(__file__).resolve().parent
 BT4_DIR = WS / "dataset_clean" / "BT4"
@@ -69,17 +69,8 @@ def read_pdf_text(path: Path) -> str:
                 texts.append(t)
         return "\n\n".join(texts).strip()
     except Exception:
-        pass
-
-    from PyPDF2 import PdfReader  # type: ignore
-
-    reader = PdfReader(str(path))
-    texts = []
-    for page in reader.pages:
-        t = (page.extract_text() or "").strip()
-        if t:
-            texts.append(t)
-    return "\n\n".join(texts).strip()
+        # pypdf failed; return empty to signal unreadable PDF in this pipeline.
+        return ""
 
 
 def read_submission_text(path: Path) -> str:
@@ -197,6 +188,30 @@ def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission
         return json.loads(m.group(0))
 
 
+def ensure_workbook(path: Path) -> None:
+    """Create an empty BT4 workbook if missing.
+
+    This makes the script runnable on first use (consistent with BT1–BT3 scripts).
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        return
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "BT4"
+    ws.append([
+        "Student ID",
+        "Criterion 1 (/3)",
+        "Criterion 2 (/4)",
+        "Criterion 3 (/2.5)",
+        "Criterion 4 (/0.5)",
+        "Total (/10)",
+        "Short feedback",
+        "Notes",
+    ])
+    wb.save(path)
+
+
 def load_rubric_text() -> str:
     text = read_docx_text(RUBRIC_PATH)
     if not text:
@@ -228,8 +243,8 @@ def row_is_error(ws, r: int) -> bool:
 
 
 def main(limit: int = 30, out_path: Path = OUT_PATH):
-    if not out_path.exists():
-        raise SystemExit(f"Missing output: {out_path}")
+    # Create the workbook on first run (if missing).
+    ensure_workbook(out_path)
 
     wb = load_workbook(out_path)
     ws = wb.active
