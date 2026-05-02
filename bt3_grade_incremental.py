@@ -10,7 +10,7 @@ from openpyxl import Workbook, load_workbook
 WS = Path(__file__).resolve().parent
 BT_DIR = WS / "dataset_clean" / "BT3"
 RUBRIC_PATH = WS / "rubric" / "rubric_BT3.docx"
-OUT_PATH = WS / "output" / "ket_qua_BT3.xlsx"
+OUT_PATH = Path(os.environ.get("OUT_PATH", str(WS / "output" / "ket_qua_BT3.xlsx")))
 OUT_PATH_RESUME = WS / "output" / "ket_qua_BT3_resume.xlsx"
 
 MAX_TC1 = 1.5
@@ -152,8 +152,7 @@ def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission
         "  \"tc2\": <number 0..2>,\n"
         "  \"tc3\": <number 0..3>,\n"
         "  \"tc4\": <number 0..2>,\n"
-        "  \"tc5\": <number 0..1.5>,\n"
-        "  \"nhan_xet_ngan\": <string ngắn 1-2 câu, tiếng Việt>\n"
+        "  \"tc5\": <number 0..1.5>\n"
         "}\n"
         "Chỉ xuất JSON."
     )
@@ -165,7 +164,7 @@ def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission
             {"role": "user", "content": user},
         ],
         "temperature": 0.1,
-        "max_tokens": 900,
+        "max_tokens": int(os.environ.get("OPENCLAW_MAX_TOKENS", "150")),
     }
 
     req = urllib.request.Request(
@@ -361,7 +360,7 @@ def main():
             tc4 = round_quarter(clamp(float(res.get("tc4", 0.0)), 0.0, MAX_TC4))
             tc5 = round_quarter(clamp(float(res.get("tc5", 0.0)), 0.0, MAX_TC5))
             total = round_half(clamp(tc1 + tc2 + tc3 + tc4 + tc5, 0.0, MAX_TOTAL))
-            short = str(res.get("nhan_xet_ngan", "")).strip()
+            short = ""  # scores-only mode (no feedback field)
 
             if r is None:
                 ws.append([mssv, tc1, tc2, tc3, tc4, tc5, total, short, ""])

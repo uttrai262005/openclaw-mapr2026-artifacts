@@ -144,8 +144,7 @@ def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission
         "  \"tc1\": <number 0..3>,\n"
         "  \"tc2\": <number 0..4>,\n"
         "  \"tc3\": <number 0..2.5>,\n"
-        "  \"tc4\": <number 0..0.5>,\n"
-        "  \"nhan_xet_ngan\": <string ngắn 1-2 câu, tiếng Việt>\n"
+        "  \"tc4\": <number 0..0.5>\n"
         "}\n"
         "Chỉ xuất JSON."
     )
@@ -157,7 +156,7 @@ def call_llm_once(url: str, token: str, model: str, rubric_text: str, submission
             {"role": "user", "content": user},
         ],
         "temperature": 0.1,
-        "max_tokens": 800,
+        "max_tokens": int(os.environ.get("OPENCLAW_MAX_TOKENS", "150")),
     }
 
     req = urllib.request.Request(
@@ -316,7 +315,7 @@ def main(limit: int = 30, out_path: Path = OUT_PATH):
             tc3 = round_quarter(clamp(float(res.get('tc3', 0.0)), 0.0, MAX_TC3))
             tc4 = round_quarter(clamp(float(res.get('tc4', 0.0)), 0.0, MAX_TC4))
             total = round_half(clamp(tc1 + tc2 + tc3 + tc4, 0.0, MAX_TOTAL))
-            short = str(res.get('nhan_xet_ngan', '')).strip()
+            short = ""  # scores-only mode (no feedback field)
 
             r = idx.get(mssv)
             if r is None:
