@@ -17,7 +17,7 @@ MODEL_BLOCK = (
     "Implementation details (reproducibility). We served all LLM calls through the OpenClaw Gateway (OpenAI-compatible /v1/chat/completions). "
     "Both Phase 1 and Phase 2 used the same underlying model: gpt-5.2 accessed via Codex OAuth within OpenClaw. "
     "In Phase 1 scripts (e.g., bt1_grade_incremental.py), the request sets temperature=0.1 and max_tokens=900. "
-    "In Phase 2 graders (giang-vien-v2), the request sets temperature=0.1 and max_tokens=800, with a 180s timeout and retry logic for rate limits and JSON parsing. "
+    "In Phase 2 graders (multi-agent-grader), the request sets temperature=0.1 and max_tokens=800, with a 180s timeout and retry logic for rate limits and JSON parsing. "
     "All graders are constrained to return JSON-only outputs with per-criterion scores, short comments, and (optionally) bullet highlights/issues."
 )
 

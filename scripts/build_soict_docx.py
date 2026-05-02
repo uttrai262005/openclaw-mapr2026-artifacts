@@ -82,7 +82,7 @@ doc.add_paragraph(
     '(rubric injection + required output schema).'
 )
 
-doc.add_heading('3.3 Phase 2: Multi-agent grading (OpenClaw giang-vien-v2)', level=2)
+doc.add_heading('3.3 Phase 2: Multi-agent grading (OpenClaw multi-agent-grader)', level=2)
 doc.add_paragraph(
     'Phase 2 runs three graders in parallel (content/structure/language) and aggregates per-criterion scores via a chairman agent (average per criterion + veto '
     'flag when grader totals differ > 2.0), then applies rounding rules.'

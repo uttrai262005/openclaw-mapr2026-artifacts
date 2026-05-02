@@ -1,5 +1,5 @@
 ---
-name: giang-vien-v2.content-grader
+name: multi-agent-grader.content-grader
 description: Chấm nội dung kiến thức/ý tưởng (ideas, evidence, accuracy) cho BT4 theo rubric TC1–TC3, vẫn trả điểm đầy đủ TC1..TC4 để chairman tổng hợp.
 ---
 

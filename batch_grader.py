@@ -32,7 +32,7 @@ from openpyxl.styles import Font
 
 WS = Path(__file__).resolve().parent
 # NOTE: Phase-2 grader skill lives under skills/multi-agent-grader.
-# The legacy folder name skills/giang-vien-v2 is retained as a stub for older references.
+# The legacy folder name skills/multi-agent-grader is retained as a stub for older references.
 sys.path.insert(0, str(WS / "skills" / "multi-agent-grader" / "scripts"))
 from semantic_scorer import score_submission  # noqa: E402
 

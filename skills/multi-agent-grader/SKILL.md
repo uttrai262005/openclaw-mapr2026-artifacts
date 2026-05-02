@@ -1,9 +1,9 @@
 ---
-name: giang-vien-v2
+name: multi-agent-grader
 description: "Phase 2 Multi-Agent Grading System: orchestrator gọi 3 grader agents (content/structure/language) song song, chairman-agent tổng hợp + veto + rounding, ghi incremental ra Excel và báo cáo chênh lệch so với Phase 1."
 ---
 
-# giang-vien-v2 (Phase 2) — Multi-Agent Grading System
+# multi-agent-grader (Phase 2) — Multi-Agent Grading System
 
 Mục tiêu: nâng chất lượng chấm bằng cách **tách 3 khía cạnh** (nội dung / cấu trúc / ngôn ngữ) thành 3 grader độc lập chạy **song song**, sau đó **chairman-agent** tổng hợp, áp **veto rules**, làm tròn điểm theo quy định và xuất Excel.
 
@@ -49,7 +49,7 @@ Mục tiêu: nâng chất lượng chấm bằng cách **tách 3 khía cạnh** 
 ## Chạy nhanh (test 5 bài đầu BT4)
 
 ```bash
-python skills/giang-vien-v2/orchestrator.py \
+python skills/multi-agent-grader/orchestrator.py \
   --rubric rubric/rubric_BT4.docx \
   --dataset dataset_clean/BT4 \
   --limit 5 \

@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 # Allow running/importing from a folder name containing '-'
-BASE = Path(__file__).resolve().parents[2]  # skills/giang-vien-v2
+BASE = Path(__file__).resolve().parents[2]  # skills/multi-agent-grader
 SCRIPTS = BASE / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))

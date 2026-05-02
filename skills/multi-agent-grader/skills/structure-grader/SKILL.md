@@ -1,5 +1,5 @@
 ---
-name: giang-vien-v2.structure-grader
+name: multi-agent-grader.structure-grader
 description: Chấm cấu trúc trình bày (organization, coherence, format) cho BT4; trọng tâm TC4 và kiểm tra bố cục yêu cầu (1)(2)(3).
 ---
 

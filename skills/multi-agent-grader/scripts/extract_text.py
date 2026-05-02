@@ -91,7 +91,7 @@ def _ocr_image_best_effort(path: Path) -> str:
 
     Notes:
     - Requires Tesseract OCR installed.
-    - We ship `vie.traineddata` in skills/giang-vien-v2/scripts/tessdata so OCR
+    - We ship `vie.traineddata` in skills/multi-agent-grader/scripts/tessdata so OCR
       can work even if the system tesseract doesn't include Vietnamese.
     """
     try:

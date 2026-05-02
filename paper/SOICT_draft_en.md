@@ -49,7 +49,7 @@ Despite rapid progress in LLM-based assessment, existing work often (i) evaluate
 ### 3.2 Phase 1: Single-agent grading
 Describe prompt structure: rubric injection, required outputs (criterion scores + total + short feedback).
 
-### 3.3 Phase 2: Multi-agent grading (OpenClaw skill giang-vien-v2)
+### 3.3 Phase 2: Multi-agent grading (OpenClaw skill multi-agent-grader)
 - Three graders run in parallel: content, structure, language.
 - A chairman agent aggregates by averaging per criterion; flags veto when grader spread exceeds a threshold; applies rounding rules.
 

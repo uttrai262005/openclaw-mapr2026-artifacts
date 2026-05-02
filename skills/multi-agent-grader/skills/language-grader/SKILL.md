@@ -1,5 +1,5 @@
 ---
-name: giang-vien-v2.language-grader
+name: multi-agent-grader.language-grader
 description: Chấm ngôn ngữ/diễn đạt (mechanics, vocabulary, clarity) cho BT4; trọng tâm chất lượng câu chữ ảnh hưởng TC4.
 ---
 
