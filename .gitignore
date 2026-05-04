@@ -11,6 +11,7 @@
 /output/*.zip
 /output/*_clean*.xlsx
 /output/*phase2*.xlsx
+/rubric/
 
 # python
 __pycache__/
