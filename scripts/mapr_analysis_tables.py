@@ -8,18 +8,12 @@ from scipy.stats import pearsonr
 from sklearn.metrics import cohen_kappa_score
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / 'output' / 'raw'
+SRC = ROOT / 'output' / 'reviewer_data'
 OUT_XLSX = ROOT / 'output' / 'mapr_analysis_tables.xlsx'
 OUT_JSON = ROOT / 'output' / 'mapr_analysis_summary.json'
 
 ASSIGNMENTS = ['BT1', 'BT2', 'BT3', 'BT4']
 MODELS = ['gpt52_single', 'gpt54', 'gpt4o', 'gpt54mini']
-MODEL_LABELS = {
-    'gpt52_single': 'GPT-5.2 (single-agent)',
-    'gpt54': 'GPT-5.4',
-    'gpt4o': 'GPT-4o',
-    'gpt54mini': 'GPT-5.4-mini',
-}
 
 
 def qwk_int(a, b):
@@ -67,67 +61,25 @@ def bootstrap_ci(metric_fn, x, y, B=3000, seed=42):
 
 
 def read_human_subset():
-    path = SRC / 'human_subset' / 'mau_cham_tay.xlsx'
-    xls = pd.ExcelFile(path)
-    out = {}
-    colmaps = {
-        'BT1': {'id': 'MSSV', 'gpt52_single': 'Tổng_P1(/10)', 'gpt52_multi': 'Tổng_P2(/10)', 'human1': 'Điểm_tay_người1', 'human2': 'Điểm_tay_người2'},
-        'BT2': {'id': 'MSSV', 'gpt52_single': 'Tổng_P1(/10)', 'gpt52_multi': 'Tổng_P2(/10)', 'human1': 'Điểm_tay_người1', 'human2': 'Điểm_tay_người2'},
-        'BT3': {'id': 'MSSV', 'gpt52_single': 'Tổng_P1(/10)', 'gpt52_multi': 'Tổng_P2(/10)', 'human1': 'Điểm_tay_người1', 'human2': 'Điểm_tay_người2'},
-        'BT4': {'id': 'MSSV', 'gpt52_single': 'Tổng_P1(/10)', 'gpt52_multi': 'Tổng_P2(/10)', 'human1': 'Điểm_tay_người1', 'human2': 'Điểm_tay_người2'},
-    }
-    for bt in ASSIGNMENTS:
-        df = pd.read_excel(path, sheet_name=bt)
-        m = colmaps[bt]
-        sdf = pd.DataFrame({
-            'student': df[m['id']].astype(str).str.replace('.0', '', regex=False).str.strip(),
-            'gpt52_single': pd.to_numeric(df[m['gpt52_single']], errors='coerce'),
-            'gpt52_multi': pd.to_numeric(df[m['gpt52_multi']], errors='coerce'),
-            'human1': pd.to_numeric(df[m['human1']], errors='coerce'),
-            'human2': pd.to_numeric(df[m['human2']], errors='coerce'),
-        })
-        sdf['GT'] = (sdf['human1'] + sdf['human2']) / 2
-        out[bt] = sdf
-    return out
+    path = SRC / 'human_subset_scores.xlsx'
+    return {bt: pd.read_excel(path, sheet_name=bt) for bt in ASSIGNMENTS}
 
 
-def load_total_table(path: Path, preferred_total_col: str | None = None) -> pd.DataFrame:
+def load_total_table(path: Path) -> pd.DataFrame:
     df = pd.read_excel(path)
-    if preferred_total_col and preferred_total_col in df.columns:
-        total_col = preferred_total_col
-    else:
-        cols = {str(c).lower(): c for c in df.columns}
-        student_col = cols.get('student') or cols.get('mssv')
-        total_col = cols.get('total') or cols.get('tổng(/10)') or cols.get('tổng_p1(/10)') or cols.get('p1_total')
-        if not total_col:
-            candidates = [c for c in df.columns if 'total' in str(c).lower() or 'tổng' in str(c).lower()]
-            for cand in candidates:
-                s = str(cand).lower()
-                if 'p2' in s:
-                    total_col = cand
-                    break
-            if not total_col and candidates:
-                total_col = candidates[0]
-    cols = {str(c).lower(): c for c in df.columns}
-    student_col = cols.get('student') or cols.get('mssv')
-    if not student_col:
-        raise ValueError(f'Missing student column in {path}')
-    if not total_col:
-        raise ValueError(f'Missing total column in {path}; columns={list(df.columns)}')
-    out = pd.DataFrame({
-        'student': df[student_col].astype(str).str.replace('.0', '', regex=False).str.strip(),
-        'total': pd.to_numeric(df[total_col], errors='coerce')
-    })
-    return out.drop_duplicates(subset=['student'])
+    return pd.DataFrame({
+        'student': df['student'].astype(str).str.strip(),
+        'total': pd.to_numeric(df['total'], errors='coerce'),
+    }).drop_duplicates(subset=['student'])
 
 
 def load_sources():
     return {
-        'gpt52_single_full': {bt: load_total_table(SRC / 'gpt52_single_full' / f'ket_qua_{bt}_clean.xlsx') for bt in ASSIGNMENTS},
-        'gpt52_multi_full': {bt: load_total_table(SRC / 'gpt52_multi_full' / f'ket_qua_{bt}_phase2.xlsx', preferred_total_col='Tổng_P2(/10)') for bt in ASSIGNMENTS},
-        'gpt4o_full': {bt: load_total_table(SRC / 'gpt4o_full' / f'ket_qua_{bt}_gpt4o.xlsx', preferred_total_col='total') for bt in ASSIGNMENTS},
-        'gpt54mini_full': {bt: load_total_table(SRC / 'gpt54mini_full' / f'ket_qua_{bt}_gpt_5_4_mini.xlsx', preferred_total_col='total') for bt in ASSIGNMENTS},
-        'gpt54_subset': {bt: load_total_table(SRC / 'gpt54_subset' / f'ket_qua_mau_cham_tay_{bt}_gpt_5_4.xlsx', preferred_total_col='total') for bt in ASSIGNMENTS},
+        'gpt52_single_full': {bt: load_total_table(SRC / 'gpt52_single_full' / f'{bt}.xlsx') for bt in ASSIGNMENTS},
+        'gpt52_multi_full': {bt: load_total_table(SRC / 'gpt52_multi_full' / f'{bt}.xlsx') for bt in ASSIGNMENTS},
+        'gpt4o_full': {bt: load_total_table(SRC / 'gpt4o_full' / f'{bt}.xlsx') for bt in ASSIGNMENTS},
+        'gpt54mini_full': {bt: load_total_table(SRC / 'gpt54mini_full' / f'{bt}.xlsx') for bt in ASSIGNMENTS},
+        'gpt54_subset': {bt: load_total_table(SRC / 'gpt54_subset' / f'{bt}.xlsx') for bt in ASSIGNMENTS},
     }
 
 
@@ -135,6 +87,7 @@ def build_subset_tables(human_subset, sources):
     merged = {}
     for bt in ASSIGNMENTS:
         base = human_subset[bt].copy()
+        base['GT'] = (base['human1'] + base['human2']) / 2
         base = base.merge(sources['gpt54_subset'][bt].rename(columns={'total': 'gpt54'}), on='student', how='left')
         base = base.merge(sources['gpt4o_full'][bt].rename(columns={'total': 'gpt4o'}), on='student', how='left')
         base = base.merge(sources['gpt54mini_full'][bt].rename(columns={'total': 'gpt54mini'}), on='student', how='left')
@@ -157,8 +110,13 @@ def compute_summary(subset_tables):
         bias = {'BT': bt, 'Mean_GT': float(np.nanmean(gt))}
         row = {'BT': bt, 'Human_QWK': human_qwk}
         ci_row = {'BT': bt, 'Human_QWK': human_qwk, 'Human_QWK_CI95_low': human_ci[0], 'Human_QWK_CI95_high': human_ci[1]}
-        for j, model in enumerate(MODELS, start=1):
-            vals = df[model]
+        model_series = {
+            'gpt52_single': df['gpt52_single'],
+            'gpt54': df['gpt54'],
+            'gpt4o': df['gpt4o'],
+            'gpt54mini': df['gpt54mini'],
+        }
+        for j, (model, vals) in enumerate(model_series.items(), start=1):
             row[f'{model}_QWK'] = qwk_int(vals, gt)
             row[f'{model}_MAE'] = mae(vals, gt)
             row[f'{model}_Pearson_r'] = pearson(vals, gt)

@@ -1,4 +1,4 @@
-# Minimal lockfile for reproducing SOICT artifact scripts (analysis/figures/doc build)
+# Minimal lockfile for reproducing the MAPR 2026 artifact scripts
 #
 # This is intentionally curated (NOT a full `pip freeze`).
 # If you need a development environment, create a separate lockfile.

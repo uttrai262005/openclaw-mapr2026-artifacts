@@ -1,13 +1,14 @@
 # Status
 
-This repository is prepared as a reproducibility package for the MAPR 2026 paper draft.
+This repository is prepared as a curated artifact package for the MAPR 2026 paper draft.
 
 ## Included
 - MAPR paper draft (`paper/mapr2026.docx`)
-- Derived benchmark outputs for GPT-5.2 / GPT-5.4 / GPT-4o / GPT-5.4-mini
-- Human-scored subset used for evaluation
+- Anonymized reviewer dataset package (`output/reviewer_data/`)
 - Recomputable metric tables via `scripts/mapr_analysis_tables.py`
+- Public analysis outputs (`output/mapr_analysis_tables.xlsx`, `output/mapr_analysis_summary.json`)
 
 ## Not included
 - Raw student submissions
-- Full private course dataset
+- Original private course dataset
+- Legacy paper materials from earlier submissions

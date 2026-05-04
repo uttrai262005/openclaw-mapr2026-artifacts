@@ -1,0 +1,7 @@
+artifact,purpose
+human_subset_scores.xlsx,human-scored subset for reviewer recomputation
+gpt52_single_full/*.xlsx,single-agent full-dataset totals
+gpt52_multi_full/*.xlsx,multi-agent full-dataset totals
+gpt4o_full/*.xlsx,GPT-4o full-dataset totals
+gpt54mini_full/*.xlsx,GPT-5.4-mini full-dataset totals
+gpt54_subset/*.xlsx,GPT-5.4 subset totals aligned to human subset

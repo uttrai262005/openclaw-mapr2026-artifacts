@@ -1,9 +1,9 @@
 # Reproducibility
 
-This repository contains the scripts and derived artifacts needed to recompute the main benchmark outputs reported in the MAPR 2026 submission.
+This repository contains the scripts and anonymized derived artifacts needed to recompute the main benchmark outputs reported in the MAPR 2026 submission.
 
 ## Scope
-The released package supports **metric recomputation from derived outputs**.
+The released package supports **metric recomputation from anonymized derived outputs**.
 It does not include raw student submissions.
 
 ## Prerequisites
@@ -39,7 +39,14 @@ powershell -ExecutionPolicy Bypass -File .\run_all.ps1
 bash ./run_all.sh
 ```
 
-## Notes
-- `output/raw/` contains the derived inputs consumed by the benchmark analysis script.
-- The current paper draft is stored at `paper/mapr2026.docx`.
-- Phase-2 outputs are included for the single-agent vs multi-agent ablation reported in the paper.
+## Released analysis inputs
+All public inputs used by the benchmark script are under:
+- `output/reviewer_data/`
+
+These files are anonymized and sufficient to recompute the reported tables.
+
+## Paper file
+- `paper/mapr2026.docx`
+
+## Additional guide
+See `ARTIFACTS.md` for mapping between repository outputs and paper sections/tables.
