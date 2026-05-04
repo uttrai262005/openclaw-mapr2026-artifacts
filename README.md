@@ -1,57 +1,61 @@
-# OpenClaw Rubric-Based Grading (SOICT submission artifacts)
+# OpenClaw MAPR 2026 Artifacts
 
-This repository contains the **code artifacts** used in our SOICT paper on rubric-grounded automated grading with OpenClaw, including:
-- Phase 1 single-agent grading scripts
-- Phase 2 multi-agent grading system (`skills/multi-agent-grader`)
-- Analysis scripts used to compute reliability metrics (QWK/MAE/Pearson) and Phase-2 vs Phase-1 shifts
-- Paper drafts (`paper/`)
+This repository contains the **code, derived artifacts, and reproducibility materials** for the MAPR 2026 submission:
 
-## What is NOT included (privacy)
-This repo **does not include** raw student submissions (DOCX/PDF/TXT/images) due to privacy constraints.
+**LLM Selection for Automated Rubric Grading: A Multi-Model Benchmark on Real E-Commerce Assignments**
 
-We recommend releasing only **derived anonymized artifacts** (scores/metadata/audit logs) and keeping raw submissions private.
+## What this repo contains
+- Phase-1 single-agent grading scripts for BT1-BT4
+- Phase-2 multi-agent grading pipeline for ablation comparison
+- Derived score outputs for multiple models:
+  - GPT-5.2 (single-agent baseline)
+  - GPT-5.4
+  - GPT-4o
+  - GPT-5.4-mini
+- Human-scored evaluation subset used for metric computation
+- Metric computation scripts and exported analysis tables
+- The current MAPR draft paper (`paper/mapr2026.docx`)
 
-## Quickstart
-### 0) Quick demo (no private data, no Gateway required)
-Build a tiny inventory from the included synthetic demo dataset:
+## Privacy
+This repository does **not** include raw student submissions (DOCX/PDF/TXT/images).
 
-```bash
-python normalize_dataset.py --src-root demo_data/dataset_expanded --out-root demo_data/dataset_clean --xlsx-out output/dataset_inventory.xlsx
-```
+Only **derived artifacts** are included:
+- score tables
+- audit summaries
+- benchmark outputs
+- analysis tables
 
-### 1) Environment
-- Python 3.10+ recommended (tested with Python 3.12)
+If you need to publish score tables more broadly, consider anonymizing identifiers before external redistribution.
 
-Create environment and install dependencies:
+## Main outputs
+Generated MAPR analysis outputs:
+- `output/mapr_analysis_tables.xlsx`
+- `output/mapr_analysis_summary.json`
+
+Supporting derived inputs used by the benchmark script:
+- `output/raw/human_subset/mau_cham_tay.xlsx`
+- `output/raw/gpt52_single_full/*.xlsx`
+- `output/raw/gpt52_multi_full/*.xlsx`
+- `output/raw/gpt4o_full/*.xlsx`
+- `output/raw/gpt54mini_full/*.xlsx`
+- `output/raw/gpt54_subset/*.xlsx`
+
+## Reproduce MAPR analysis
+### Environment
+- Python 3.10+ recommended
+- Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-For *exact* reproducibility (recommended), install the pinned lockfile used by the authors:
+For pinned versions:
 
 ```bash
 pip install -r requirements.lock.txt
 ```
 
-### System dependency (OCR)
-Some utilities support OCR via `pytesseract`, which requires the **Tesseract OCR** binary to be installed on your system.
-
-- Ubuntu/Debian:
-  ```bash
-  sudo apt-get update && sudo apt-get install -y tesseract-ocr
-  ```
-- macOS (Homebrew):
-  ```bash
-  brew install tesseract
-  ```
-- Windows:
-  Install Tesseract and ensure `tesseract.exe` is available on `PATH`.
-
-
-### 2) Reproduce the paper artifacts (no private data required)
-Run the full reproduction pipeline:
-
+### Run analysis
 **Windows (PowerShell):**
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\run_all.ps1
@@ -62,48 +66,25 @@ powershell -ExecutionPolicy Bypass -File .\run_all.ps1
 bash ./run_all.sh
 ```
 
-This produces:
-- `output/soict_analysis_tables.xlsx`
-- `output/soict_bootstrap_ci.xlsx`
-- `paper/figures/*`
-- `paper/SOICT_CCIS_camera_ready.docx`
-
-### 3) Configure OpenClaw Gateway (only needed if you run grading)
-The graders call an OpenAI-compatible endpoint provided by the OpenClaw Gateway.
-
-Set:
-- `OPENCLAW_GATEWAY_URL`
-- `OPENCLAW_GATEWAY_TOKEN`
-
-Optionally:
-- `OPENCLAW_MODEL` (default used by Phase 1 scripts is `openai-codex/gpt-5.2`)
+This generates:
+- `output/mapr_analysis_tables.xlsx`
+- `output/mapr_analysis_summary.json`
 
 ## Repository structure
-- `skills/multi-agent-grader/`: Phase 2 multi-agent grading system
-- `bt*_grade_incremental.py`: Phase 1 grading scripts (LLM calls via OpenClaw Gateway)
-- `bt4_grade_incremental.py`: Phase 1 BT4 incremental grading/updating helper
-- `scripts/`: metric computation and paper utilities
-- `paper/`: Word/Markdown drafts
-- `data/`: placeholder for private datasets (NOT committed)
+- `bt*_grade_incremental.py`: grading scripts
+- `skills/`: multi-agent grading skill and related components
+- `scripts/mapr_analysis_tables.py`: MAPR benchmark metric builder
+- `output/raw/`: derived benchmark inputs used for recomputation
+- `paper/`: paper draft and related paper assets
 
-## Reproducibility notes
-- Phase 1 and Phase 2 are designed to be comparable by using the **same underlying model** (gpt-5.2 via OpenClaw/Codex OAuth) while changing only the orchestration.
-- LLM outputs are constrained to **JSON-only** responses for robust parsing.
+## Reproducibility note
+This package is designed so reviewers or later readers can:
+1. inspect the benchmark setup,
+2. recompute reported metrics from released derived outputs,
+3. verify that the MAPR paper tables match the repository artifacts.
 
-## How to cite
-- See `CITATION.cff` (GitHub will also show a *Cite this repository* panel).
-- If you use the code/artifacts in academic work, please cite the associated SOICT paper as described there.
-
-## Recommended GitHub topics
-To improve discoverability, we recommend adding these Topics on GitHub:
-- reproducibility
-- educational-ai
-- automated-grading
-- rubric-based-assessment
-- llm
-- multi-agent
-- agentic-ai
-- evaluation
+## Citation
+See `CITATION.cff`.
 
 ## License
 See `LICENSE`.

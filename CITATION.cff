@@ -1,10 +1,10 @@
 cff-version: 1.2.0
-message: "If you use this code, please cite the associated SOICT paper."
-title: "OpenClaw Rubric-Based Grading Artifacts"
+message: "If you use this repository, please cite the associated MAPR 2026 paper."
+title: "OpenClaw MAPR 2026 Artifacts"
 type: software
-version: "1.0.0"
-date-released: "2026-05-02"
-repository-code: "https://github.com/uttrai262005/openclaw-soict-artifacts"
+version: "2.0.0"
+date-released: "2026-05-04"
+repository-code: "https://github.com/uttrai262005/openclaw-mapr2026-artifacts"
 authors:
   - family-names: "Nguyen"
     given-names: "Dinh Truc"
@@ -13,13 +13,13 @@ authors:
 
 preferred-citation:
   type: conference-paper
-  title: "An Auditable Agentic LLM Pipeline for Rubric-Based Grading: Evidence from a Real E-commerce Course Dataset"
+  title: "LLM Selection for Automated Rubric Grading: A Multi-Model Benchmark on Real E-Commerce Assignments"
   authors:
     - family-names: "Nguyen"
       given-names: "Dinh Truc"
     - family-names: "Nguyen"
       given-names: "Uyen Nhi"
   conference:
-    name: "SOICT"
+    name: "MAPR"
     year: 2026
-  url: "https://github.com/uttrai262005/openclaw-soict-artifacts"
+  url: "https://github.com/uttrai262005/openclaw-mapr2026-artifacts"

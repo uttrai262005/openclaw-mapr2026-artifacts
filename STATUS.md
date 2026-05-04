@@ -1,11 +1,13 @@
 # Status
 
-This repository is prepared as a reproducibility package for the SOICT paper draft.
+This repository is prepared as a reproducibility package for the MAPR 2026 paper draft.
 
-## Privacy
-- Raw student submissions are NOT included.
-- Use `scripts/anonymize_ids.py` if you need to share score tables that contain student IDs.
+## Included
+- MAPR paper draft (`paper/mapr2026.docx`)
+- Derived benchmark outputs for GPT-5.2 / GPT-5.4 / GPT-4o / GPT-5.4-mini
+- Human-scored subset used for evaluation
+- Recomputable metric tables via `scripts/mapr_analysis_tables.py`
 
-## One-command reproduction
-- Windows: `run_all.ps1`
-- macOS/Linux: `run_all.sh`
+## Not included
+- Raw student submissions
+- Full private course dataset

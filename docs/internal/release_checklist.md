@@ -1,22 +1,20 @@
 # Release checklist (GitHub)
 
 ## Before pushing
-- [ ] Confirm no private data is included (`dataset_clean/`, raw submissions, or any student PDFs/DOCX).
-- [ ] If score tables include MSSV, run anonymization:
-  ```bash
-  python scripts/anonymize_ids.py --in output/soict_analysis_tables.xlsx --out output/soict_analysis_tables_anonymized.xlsx --salt "<secret>"
-  ```
+- [ ] Confirm no raw student submissions are included.
+- [ ] Confirm the repository contains only derived artifacts and paper-support files.
 - [ ] Verify reproduction:
   - Windows: `run_all.ps1`
   - macOS/Linux: `run_all.sh`
+- [ ] Open `output/mapr_analysis_tables.xlsx` and confirm values match the current MAPR draft.
+- [ ] Open `paper/mapr2026.docx` and ensure the GitHub link points to the MAPR artifact repository.
 
 ## After pushing
-- [ ] Create a Git tag `v1.0-soict`.
+- [ ] Create a Git tag `v2.0-mapr`.
 - [ ] Create a GitHub Release with:
-  - `paper/SOICT_CCIS_camera_ready.docx`
-  - figures under `paper/figures/`
-  - (optional) anonymized score tables
+  - `paper/mapr2026.docx`
+  - `output/mapr_analysis_tables.xlsx`
+  - `output/mapr_analysis_summary.json`
 
-## Optional (nice-to-have)
-- [ ] Add a PDF export of the paper for convenient viewing on GitHub.
-  - If you have Microsoft Word installed, export `paper/SOICT_CCIS_camera_ready.docx` as PDF and upload to the release.
+## Optional
+- [ ] Add an anonymized public export if you later want broader sharing beyond the review artifact package.
